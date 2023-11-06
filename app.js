@@ -3,6 +3,9 @@ const mongoose = require("mongoose");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const { requireAuth, checkUser } = require("./middleware/authMiddleware");
+require('dotenv').config();
+
+const dbPassword = process.env.DB_PASSWORD;
 
 const app = express();
 app.use(express.json());
@@ -21,7 +24,7 @@ app.set("views", path.join(__dirname, "views"));
 
 // database connection
 const dbURI =
-  "mongodb+srv://mongodb:loveable@cluster0.dko2ncp.mongodb.net/?retryWrites=true&w=majority";
+  `mongodb+srv://mongodb:${dbPassword}@cluster0.dko2ncp.mongodb.net/?retryWrites=true&w=majority`;
 mongoose
   .connect(dbURI, {
     useNewUrlParser: true,
@@ -30,6 +33,7 @@ mongoose
   })
   .then((result) => app.listen(3000))
   .catch((err) => console.log(err));
+
 
 // routes
 app.get("*", checkUser);
