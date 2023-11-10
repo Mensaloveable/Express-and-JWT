@@ -37,7 +37,7 @@ userSchema.statics.login = async function (email, password) {
 
   }
 
-  throw Error("IInvalid Credentials");
+  throw Error("Invalid Credentials");
 };
 
 const User = mongoose.model("user", userSchema);
